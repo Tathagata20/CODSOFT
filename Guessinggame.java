@@ -1,21 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package guessinggame;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
-/**
- *
- * @author tatba
- */
+
 public class Guessinggame extends JFrame implements ActionListener {
-    JTextField ennum,conum,mtext;
+    JTextField ennum,conum,scoreTF,mtext;
     JButton check,tryagain;
-    int i=0,enumber,cnumber;
+    int score=0,enumber,cnumber;
     Guessinggame(){
         setLayout(null);
         ImageIcon i1=new ImageIcon(ClassLoader.getSystemResource("icons/guessimg.png"));
@@ -39,14 +33,24 @@ public class Guessinggame extends JFrame implements ActionListener {
         add(ennum);
         
         JLabel number=new JLabel("Correct Number");
-        number.setBounds(500, 210, 300, 30);
+        number.setBounds(500, 170, 300, 30);
         number.setFont(new Font("Showcard Gothic",Font.BOLD,14));
         number.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add(number);
         
         conum=new JTextField();
-        conum.setBounds(625, 250, 50, 30);
+        conum.setBounds(625, 210, 50, 30);
         add(conum);
+        
+        JLabel score=new JLabel("Score");
+        score.setBounds(500, 290, 300, 30);
+        score.setFont(new Font("Showcard Gothic",Font.BOLD,14));
+        score.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        add(score);
+        
+        scoreTF=new JTextField();
+        scoreTF.setBounds(625, 330, 50, 30);
+        add(scoreTF);
         
         mtext=new JTextField();
         mtext.setBounds(500, 400, 286, 30);
@@ -75,20 +79,28 @@ public class Guessinggame extends JFrame implements ActionListener {
                 Random ob=new Random();
                 this.cnumber=ob.nextInt(1,100);
                 this.enumber=Integer.parseInt(ennum.getText());
-                if (enumber==cnumber && i<3) {
+                if (enumber==cnumber) {
                     conum.setText(Integer.toString(cnumber));
                     mtext.setText("Congratulations! Your guess is correct.");
                     check.setEnabled(false);
+                    score+=100;
+                    scoreTF.setText(Integer.toString(score));
+                    
                 }
                 else{
                     conum.setText(Integer.toString(cnumber));
                     mtext.setText("Sorry! Your guess is wrong. Try again.");
+                    score+=1;
+                    scoreTF.setText(Integer.toString(score));
                 
                 }
                 
             }
             else if(ae.getSource()==tryagain){
-                if(enumber!=cnumber && i<3){
+                if(enumber==cnumber){
+                    check.setEnabled(true);
+                    }
+                else{
                     ennum.setText("");
                     conum.setText("");
                     mtext.setText("");
@@ -97,7 +109,6 @@ public class Guessinggame extends JFrame implements ActionListener {
             }
     }
     public static void main(String[] args) {
-        // TODO code application logic here
          new Guessinggame();
     }
     
